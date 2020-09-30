@@ -1,7 +1,3 @@
-def JAVA_CHANGED = true
-def SPINNER_CHANGED = false
-def INCLUSION_LIST = ""
-
 pipeline {
   agent {
     kubernetes {
@@ -43,15 +39,12 @@ spec:
         steps{
         container('java-ant-container'){
             script{
-					if(JAVA_CHANGED){
-						step ([$class: 'CopyArtifact',
-							projectName: '2018x_OOTB_FD12',
-							target: 'ootb']);
-						withAnt(installation: 'Ant') {
-							sh "ant clean retrieveOOTBSource compile dhDeployment"
-						}
-					}
-				} // end script
+				
+			withAnt(installation: 'Ant') {
+			sh "ant clean compile"
+			}
+					
+		} // end script
         }
         }
     }
